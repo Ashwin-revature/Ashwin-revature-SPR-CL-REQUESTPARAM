@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SearchController {
     /**
-     * Query parameters allow the developer in include some variable data in an HTTP request, as part of the endpoint,
+     * Query parameters allow the developer to include some variable data in an HTTP request, as part of the endpoint,
      * that may be used to conduct some very specific query or action on your backend. A query parameter is the part
      * of the URL following the ? symbol, such as cats.site/cats?term=photos&format=png&orderby=popularity. For instance,
      * if you are writing an endpoint intended to return some search results, it would be conventional to include not
@@ -21,32 +21,35 @@ public class SearchController {
      * responding with "searchterm".
      */
     @GetMapping(value = "cats", params = {"term"})
-    public String getSearchTerm(@RequestParam String term){
+    public String getSearchTerm(@RequestParam String term) {
         return term;
     }
+
     /**
-     * Here's an example of how to extract multiple path params from the HTTP quest. Notice how the terms are defined
+     * Here's an example of how to extract multiple path params from the HTTP request. Notice how the terms are defined
      * as part of the endpoint's signature - this allows Spring to identify two distinct endpoints that both use a
      * base endpoint "cats" but feature different query parameters.
      */
     @GetMapping(value = "cats", params = {"term", "format"})
-    public String[] getSearchTermAndPage(@RequestParam String term, @RequestParam String format){
+    public String[] getSearchTermAndFormat(@RequestParam String term, @RequestParam String format) {
         return new String[]{term, format};
     }
+
     /**
-     * TODO: extract the numeric 'amount' query parameter from a request, such as GET localhost:9000/cats?amount=50,
-     * returning 50.
+     * This method extracts the numeric 'amount' query parameter from a request,
+     * such as GET localhost:9000/cats?amount=50, and returns 50.
      */
     @GetMapping(value = "cats", params = {"amount"})
-    public int getSearchFormat(){
-        return 0;
+    public int getSearchAmount(@RequestParam int amount) {
+        return amount;
     }
+
     /**
-     * TODO: extract the String 'format' and 'orderBy' query parameters from a request, such as
-     * GET localhost:9000/cats?format=gif&orderby=new, returning a String array such as {"gif", "new"}
+     * This method extracts the String 'format' and 'orderBy' query parameters from a request,
+     * such as GET localhost:9000/cats?format=gif&orderby=new, returning a String array such as {"gif", "new"}.
      */
     @GetMapping(value = "cats", params = {"format", "orderBy"})
-    public String[] getSearchFormatAndAmount(){
-        return null;
+    public String[] getSearchFormatAndOrderBy(@RequestParam String format, @RequestParam String orderBy) {
+        return new String[]{format, orderBy};
     }
 }
